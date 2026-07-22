@@ -9,6 +9,13 @@ espera_tiro = 10;
 timer_tiro = 0;
 level_tiro = 1;
 
+//vida
+vida = 3;
+
+//escudo
+escudo = 3;
+meu_escudo = noone;
+
 #endregion
 
 
@@ -92,6 +99,53 @@ tiro3 = function()
 ganha_level = function()
 {
     if (level_tiro < 3) level_tiro++;
+}
+
+//desenha icones
+desenha_icone = function(_icone, _espaco, _sprite)
+{
+    //posição
+    var _x = 20;
+    var _y = display_get_gui_height() - _espaco;
+    
+    //desenhando icone
+    repeat (_icone) 
+    {
+    	draw_sprite_ext(_sprite, 0, _x, _y, 1, 1, 0, c_white, .6);
+        
+        _x += 30;
+    }
+}
+
+//perde vida
+perde_vida = function()
+{
+    //perdendo vida
+    if (vida > 1)
+    {
+        vida--;
+    }
+    //morrendo
+    else
+    {
+        instance_destroy();
+    }
+}
+
+usa_escudo = function()
+{
+    if (keyboard_check_pressed(ord("E")))
+    {   
+        //perdendo escudo
+        if (escudo > 0 && meu_escudo == noone)
+        {
+            //perdendo escudo
+            escudo--;
+            
+            //criando o escudo
+            meu_escudo = instance_create_layer(x, y, "Escudo", obj_escudo);
+        }
+    }
 }
 
 #endregion
