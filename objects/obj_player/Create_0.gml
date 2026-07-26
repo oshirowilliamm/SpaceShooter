@@ -1,3 +1,9 @@
+//parando de tocar a musica
+audio_stop_sound(snd_soundtrack);
+
+//tocando musica
+audio_play_sound(snd_soundtrack, 0, 1);
+
 #region Variáveis
 
 spd = 2;
@@ -20,6 +26,9 @@ meu_escudo = noone;
 invensivel = false;
 tempo_invensivel = game_get_speed(gamespeed_fps);
 timer_invensivel = 0;
+
+inicia_efeito_mola();
+inicia_efeito_branco();
 
 #endregion
 
@@ -71,6 +80,10 @@ atirando = function(_atirar)
     //se apertou o botão e o timer deixar, pode atirar
     if (_atirar && timer_tiro <= 0)
     {
+        //efeito stretch
+        efeito_mola(1.2, .8);
+        
+        //tiros de acordo com o level
         switch (level_tiro) 
         {
         	case 1: tiro1(); break;
@@ -80,6 +93,10 @@ atirando = function(_atirar)
             default: tiro1(); break;
         }
         
+        //som de tiro
+        audio_stop_sound(snd_player_laser);
+        som(snd_player_laser);
+        
         //resetando timer do tiro
         timer_tiro = espera_tiro;
     }
@@ -88,18 +105,14 @@ atirando = function(_atirar)
 //primeiro tiro (padrão)
 tiro1 = function()
 {
-    var _tiro = instance_create_layer(x, y, "Tiro", obj_tiro_player);
-    _tiro.vspeed = -10; //indo pra cima
+    instance_create_layer(x, y, "Tiro", obj_tiro_player);
 }
 
 //segundo tiro (dois tiros)
 tiro2 = function()
 {
-    var _tiro = instance_create_layer(x - 12, y, "Tiro", obj_tiro_player);
-    _tiro.vspeed = -10; //indo pra cima
-    
-    _tiro = instance_create_layer(x + 12, y, "Tiro", obj_tiro_player);
-    _tiro.vspeed = -10; //indo pra cima
+    instance_create_layer(x - 12, y, "Tiro", obj_tiro_player);
+    instance_create_layer(x + 12, y, "Tiro", obj_tiro_player);
 }
 
 //terceiro tiro (tres tiros)
@@ -136,10 +149,19 @@ perde_vida = function()
     //só perde vida se n esta invencivel
     if (timer_invensivel > 0) return;
     
+    efeito_mola(2, .5);
+    efeito_branco(5);
+    
+    //som de hit
+    som(snd_player_hit);
+    
     //perdendo vida
     if (vida > 1)
     {
         vida--;
+        
+        //criando screenshake
+        screenshake(10);
         
         //timer de invencivel
         timer_invensivel = tempo_invensivel;
@@ -148,6 +170,11 @@ perde_vida = function()
     else
     {
         instance_destroy();
+        instance_create_layer(x, y, "Explosoes", obj_player_explosao);
+        som(snd_explosion);
+        
+        //criando screenshake
+        screenshake(50);
     }
 }
 
@@ -163,6 +190,9 @@ usa_escudo = function()
             
             //criando o escudo
             meu_escudo = instance_create_layer(x, y, "Escudo", obj_escudo);
+            
+            //som de escudo levantando
+            som(snd_escudo_up);
         }
     }
 }

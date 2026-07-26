@@ -1,0 +1,1 @@
+chama_transicao("transicao", sq_transicao1);

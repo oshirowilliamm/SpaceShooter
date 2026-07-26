@@ -22,6 +22,9 @@ atirando = function()
         var _tiro = instance_create_layer(x, y, "Tiro", obj_tiro_inimigo1);
         _tiro.vspeed = 4;
         
+        //som de tiro
+        som(snd_enemy_laser);
+        
         //resetando timer
         timer_tiro = espera_tiro;
     }
@@ -38,6 +41,12 @@ morrendo = function()
     {
         instance_create_layer(x, y, "Level", obj_powerup);   
     }
+    
+    //criando screenshake
+    screenshake(50);
+    
+    //som de explodindo
+    som(snd_explosion);
 }
 
 #endregion
