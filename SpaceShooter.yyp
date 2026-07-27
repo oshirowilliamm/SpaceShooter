@@ -51,6 +51,7 @@
   "resources":[
     {"id":{"name":"fnt_menu","path":"fonts/fnt_menu/fnt_menu.yy",},},
     {"id":{"name":"fnt_padrao","path":"fonts/fnt_padrao/fnt_padrao.yy",},},
+    {"id":{"name":"fnt_tutorial","path":"fonts/fnt_tutorial/fnt_tutorial.yy",},},
     {"id":{"name":"obj_escudo","path":"objects/obj_escudo/obj_escudo.yy",},},
     {"id":{"name":"obj_inimigo_explosao","path":"objects/obj_inimigo_explosao/obj_inimigo_explosao.yy",},},
     {"id":{"name":"obj_inimigo1","path":"objects/obj_inimigo1/obj_inimigo1.yy",},},
@@ -80,6 +81,7 @@
     {"id":{"name":"sq_onda2","path":"sequences/sq_onda2/sq_onda2.yy",},},
     {"id":{"name":"sq_transicao1","path":"sequences/sq_transicao1/sq_transicao1.yy",},},
     {"id":{"name":"sq_transicao2","path":"sequences/sq_transicao2/sq_transicao2.yy",},},
+    {"id":{"name":"sq_tutorial","path":"sequences/sq_tutorial/sq_tutorial.yy",},},
     {"id":{"name":"sh_branco","path":"shaders/sh_branco/sh_branco.yy",},},
     {"id":{"name":"snd_botao_menu","path":"sounds/snd_botao_menu/snd_botao_menu.yy",},},
     {"id":{"name":"snd_enemy_laser","path":"sounds/snd_enemy_laser/snd_enemy_laser.yy",},},

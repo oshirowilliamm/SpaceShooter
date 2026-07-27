@@ -175,6 +175,10 @@ perde_vida = function()
         
         //criando screenshake
         screenshake(50);
+        
+        //criando transicao
+        chama_transicao("transicao", sq_transicao1);
+        global.transicao = true;
     }
 }
 
