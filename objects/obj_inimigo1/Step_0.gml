@@ -1,3 +1,5 @@
+if (global.hitstop) exit;
+
 atirando();
 
 //destruindo o inimigo da sequence

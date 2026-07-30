@@ -30,6 +30,8 @@ timer_invensivel = 0;
 inicia_efeito_mola();
 inicia_efeito_branco();
 
+mostrar = true;
+
 #endregion
 
 
@@ -41,6 +43,16 @@ controla_player = function()
 {
     //timer de invencibilidade
     timer_invensivel--;
+    
+    //alterando o mostrar
+    if (timer_invensivel > 0)
+    {
+        mostrar = !mostrar;
+    }
+    else
+    {
+        mostrar = true;
+    }
     
     //pegando as teclas
     var _right  = keyboard_check(ord("D")) || keyboard_check(vk_right);
@@ -105,14 +117,18 @@ atirando = function(_atirar)
 //primeiro tiro (padrão)
 tiro1 = function()
 {
-    instance_create_layer(x, y, "Tiro", obj_tiro_player);
+    var _range = 7;
+    var _x = x + random_range(-_range, _range);
+    instance_create_layer(_x, y, "Tiro", obj_tiro_player);
 }
 
 //segundo tiro (dois tiros)
 tiro2 = function()
 {
-    instance_create_layer(x - 12, y, "Tiro", obj_tiro_player);
-    instance_create_layer(x + 12, y, "Tiro", obj_tiro_player);
+    var _range = 7;
+    var _x = x + random_range(-_range, _range);
+    instance_create_layer(_x - 12, y, "Tiro", obj_tiro_player);
+    instance_create_layer(_x + 12, y, "Tiro", obj_tiro_player);
 }
 
 //terceiro tiro (tres tiros)
@@ -120,6 +136,17 @@ tiro3 = function()
 {
     tiro1();
     tiro2();
+}
+
+//efeitos
+efeitos = function()
+{
+    //criando screenshake
+    screenshake(10);
+    //hitstop
+    ativa_hitstop();
+    //damage_flash
+    ativa_damage_flash(c_red);
 }
 
 //ganhando level 
@@ -159,9 +186,7 @@ perde_vida = function()
     if (vida > 1)
     {
         vida--;
-        
-        //criando screenshake
-        screenshake(10);
+        efeitos();
         
         //timer de invencivel
         timer_invensivel = tempo_invensivel;
@@ -208,14 +233,10 @@ poder_escudo = function()
         //escudo me segue
         meu_escudo.x = x;
         meu_escudo.y = y;
-        
-        //deixando invencivel
-        timer_invensivel = 10;
     }
     //se n tem escudo, volta a ser noone
     else
     {
-        timer_invensivel = 0; //deixando de ser invencivel
         meu_escudo = noone; //sem escudo
     }
 }

@@ -19,8 +19,9 @@ atirando = function()
     //so cria o tiro se o timer deixar
     if (timer_tiro <= 0)
     {
+        //criando tiro
         var _tiro = instance_create_layer(x, y, "Tiro", obj_tiro_inimigo1);
-        _tiro.vspeed = 4;
+        _tiro.vspd = 4;
         
         //som de tiro
         som(snd_enemy_laser);
@@ -44,6 +45,9 @@ morrendo = function()
     
     //criando screenshake
     screenshake(50);
+    
+    //hitstop
+    ativa_hitstop(5);
     
     //som de explodindo
     som(snd_explosion);

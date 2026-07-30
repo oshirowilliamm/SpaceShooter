@@ -5,6 +5,10 @@ timer_carregando = 0;
 contador = 0;
 decidir_direcao = false;
 
+spd = 1;
+vspd = 0;
+hspd = 0;
+
 inicia_efeito_mola();
 inicia_efeito_branco();
 
@@ -16,10 +20,11 @@ state_machine = function()
             //indo pra baixo
             if (y < 160)
             {
-                y++;
+                vspd = spd;
             }
             else
             {
+                vspd = 0;
                 estado = "carregando";
             }
         break;
@@ -42,10 +47,17 @@ state_machine = function()
             {
                 //atirando
                 var _tiro = instance_create_layer(x, y, "Tiro", obj_tiro_inimigo3);
-                _tiro.speed = 4;
                 
                 //atirando na direção do player
                 var _dir = point_direction(x, y, obj_player.x, obj_player.y);
+                
+                //velocidade do tiro
+                var _hspd = lengthdir_x(_tiro.spd, _dir);
+                var _vspd = lengthdir_y(_tiro.spd, _dir);
+                _tiro.hspd = _hspd;
+                _tiro.vspd = _vspd;
+                
+                //direção
                 _tiro.direction = _dir;
                 _tiro.image_angle = _dir + 90;
                 
@@ -72,7 +84,14 @@ state_machine = function()
             {
             	//atirando
                 var _tiro = instance_create_layer(x, y, "Tiro", obj_tiro_inimigo3b);
-                _tiro.speed = 4;
+                
+                //velocidade do tiro
+                var _hspd = lengthdir_x(_tiro.spd, _ang);
+                var _vspd = lengthdir_y(_tiro.spd, _ang);
+                _tiro.hspd = _hspd;
+                _tiro.vspd = _vspd;
+                
+                //direção
                 _tiro.direction = _ang;
                 _tiro.image_angle = _tiro.direction + 90;
                 
@@ -98,12 +117,12 @@ state_machine = function()
         case "fugindo":
             if (!decidir_direcao)
             {
-                hspeed = choose(-2, 2);
-                vspeed = -1;
+                hspd = lengthdir_x(spd * 2, random(359));
+                vspd = lengthdir_y(spd * 2, random(359));
                 decidir_direcao = true;
             }
             //se destruindo ao sair da room
-            if (y < -50)
+            if (y < -50 || y > room_height + 50 || x < -50 || x > room_width + 50)
             {
                 instance_destroy();
             }
@@ -121,6 +140,9 @@ morrendo = function()
     {
         //perdendo vida
         vida--;
+        
+        //hitstop
+        ativa_hitstop(2);
     }
     else
     {

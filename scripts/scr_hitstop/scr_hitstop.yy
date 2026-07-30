@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_hitstop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_hitstop",
+  "parent":{
+    "name":"Hitstop",
+    "path":"folders/Efeitos/Hitstop.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
